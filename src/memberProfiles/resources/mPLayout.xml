@@ -1,7 +1,8 @@
-  <item>
-    <title><![CDATA[Ian Batra]]></title>
+<item>
+<title><![CDATA[Ian Batra]]></title>
     
-    <content:encoded><![CDATA[
+<content:encoded>
+  <![CDATA[
     <!-- wp:acf/block-callout-block {
       "name": "acf\/block-callout-block",
       "data": {
@@ -317,10 +318,9 @@
         },
       "align": "",
       "mode": "edit"
-    } /-->]]></content:encoded>
+    }
+  /-->]]>
+</content:encoded>
 
-    
-    <wp:post_type><![CDATA[member-profile]]></wp:post_type>
-    
-
-  </item>
+<wp:post_type><![CDATA[member-profile]]></wp:post_type>
+</item>
