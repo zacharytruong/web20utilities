@@ -1,14 +1,14 @@
-import agents from './../data/agents.csv';
+// import agents from './../data/agents.csv';
 
 const data = (function() {
 
   const AgentsArray = [];
 
-  const restructureAgentsArray = ([keys, ...values]) => 
-    values.map(vs => Object.fromEntries(vs.map((v, i) => [keys[i], v])));
-  const result = restructureAgentsArray(agents);
+  // const restructureAgentsArray = ([keys, ...values]) => 
+  //   values.map(vs => Object.fromEntries(vs.map((v, i) => [keys[i], v])));
+  // const result = restructureAgentsArray(agents);
 
-  console.log(result);
+  // console.log(agents);
 
 
 

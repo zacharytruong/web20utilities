@@ -2,10 +2,7 @@ import './style.css';
 import FileSaver, { saveAs } from 'file-saver';
 import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
 
-
-
-( function() {
-
+( function init() {
 
   function _init() {
     mPXMLImport();
@@ -13,17 +10,11 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
 
 })();
 
-
 (function basicLayout() {
   
   const mainContent = document.getElementById('mainContent');
-  
-  // mainContent.style.background = 'rgba( 255, 255, 255, 0.25 )';
-  // mainContent.style.boxShadown = '0 8px 32px 0 rgba( 31, 38, 135, 0.37 )';
-  // mainContent.style.backdropFilter = 'blur( 4px )';
-  // mainContent.style['-webkit-backdrop-filter'] = 'blur( 4px )';
-  // mainContent.style.border = '.1rem solid rgba( 255, 255, 255, 0.18 )';
   mainContent.style.display = 'flex';
+  mainContent.style['flex-direction'] = 'column';
   mainContent.style['align-items'] = 'center';
   mainContent.style['justify-content'] = 'center';
   mainContent.style.minWidth = '100vw';
@@ -33,21 +24,27 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
 
 (function uploadForm() {
 
-  // const mainContent = document.getElementById('mainContent');
   const uploadForm = document.createElement('form');
   mainContent.appendChild(uploadForm);
+  
   const uploadBtn = document.createElement('input');
   uploadBtn.id = 'upload';
   uploadBtn.type = 'file';
+  uploadBtn.accept = '.csv';
+  uploadBtn.style.display = 'none';
   uploadBtn.addEventListener('change', handleUploadFile);
   uploadForm.appendChild(uploadBtn);
-  uploadBtn.style.padding = `1.5rem 3rem`;
-  uploadBtn.style.cursor = 'pointer';
-  uploadBtn.style.fontSize = '2rem';
-  uploadBtn.style.background = '#3f4241';
-  uploadBtn.style.color = '#FFFFFF';
-  uploadBtn.style['border-radius'] = '.7rem';
+  const uploadBtnLabel = document.createElement('label');
+  uploadBtnLabel.setAttribute('for', 'upload');
+  uploadBtnLabel.textContent = 'Browse';
+  uploadBtnLabel.style.padding = '1.5rem 3rem';
+  uploadBtnLabel.style.background = '#3f4241';
+  uploadBtnLabel.style['border-radius'] = '.7rem';
+  uploadBtnLabel.style.margin = '1rem';
+  uploadBtnLabel.style.color = '#FFFFFF';
+  uploadForm.appendChild(uploadBtnLabel);
   mainContent.appendChild(uploadForm);
+
   const dropArea = document.createElement('div');
   dropArea.id = 'drop-area';
   dropArea.style.width = '30rem';
@@ -62,12 +59,11 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   dropNotice.style.padding = '2rem';
   dropNotice.style.userSelect = 'none';
   dropArea.appendChild(dropNotice);
-  uploadForm.appendChild(dropArea);
-
-  function handleUploadFile(e) {
-    console.log(e.target.files)
-  }
+  mainContent.appendChild(dropArea);
   
+  let reader = new FileReader();
+  reader.addEventListener('load', handleFileRead);
+
   dropArea.addEventListener('dragover', (event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -78,17 +74,39 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   dropArea.addEventListener('drop', (event) => {
     event.stopPropagation();
     event.preventDefault();
-    const fileList = event.dataTransfer.files;
-    dropNotice.textContent = fileList[0].name;
-    console.log(fileList);
+    const file = event.dataTransfer.files[0];
+    const fileType = file.type;
+    fileType === 'text/csv' ? dropNotice.textContent = file.name : dropNotice.textContent = 'Unsupported file, please add csv file only.'
+    reader.readAsText(file);
   });
-})();
-
-(function dropFile() {
-
-    
-
-
+  
+  function handleUploadFile(e) {
+    console.log('uploading');
+    let file = e.target.files[0];
+    reader.readAsText(file);
+  }
+  function handleFileRead(e) {
+    const save = e.target.result;
+    const arr = strToArr(save);
+    const localStorage = window.localStorage;
+    localStorage.setItem('uploadedFile', JSON.stringify(arr));
+    // const agent = JSON.parse(localStorage.getItem('uploadedFile'))[0];
+    // console.log(agent['"Email"'].slice(1, agent['"Email"'].length - 1));
+    localStorage.clear()
+  }
+  function strToArr(str, delimiter = ',') {
+    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+    const arr = rows.map(function (row) {
+      const values = row.split(delimiter);
+      const el = headers.reduce(function (object, header, index) {
+        object[header] = values[index];
+        return object;
+      }, {});
+      return el;
+    });
+    return arr;
+  }
 })();
 
 (function downloadBtn() {
@@ -107,20 +125,3 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   downloadBtn.onclick = (() => FileSaver.saveAs(blob, "memberProfilesXML.xml"));
 
 })();
-
-// (function downloadBtn() {
-
-//   const downloadBtn = document.createElement('button');
-//   downloadBtn.textContent = 'Download';
-//   downloadBtn.style.padding = `1.5rem 3rem`;
-//   downloadBtn.style.cursor = 'pointer';
-//   downloadBtn.style.fontSize = '2rem';
-//   downloadBtn.style.background = '#3f4241';
-//   downloadBtn.style.color = '#FFFFFF';
-//   downloadBtn.style['border-radius'] = '.7rem';
-//   mainContent.appendChild(downloadBtn);
-
-//   const blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-//   downloadBtn.onclick = (() => FileSaver.saveAs(blob, "Hello World.xml"));
-
-// })();
