@@ -1,5 +1,5 @@
 <item>
-<title><![CDATA[${agent['Preferred Name]}]]></title>
+<title><![CDATA[Ian Batra]]></title>
     
 <content:encoded>
   <![CDATA[
@@ -44,10 +44,11 @@
     } /-->
 
     <!-- wp:acf/block-team-member-block {
-      "name": "acf\/block-team-member-block",
-      "data": [],
-      "align": "",
-      "mode": "edit"
+    "id": "block_620ed4cc205b9",
+    "name": "acf\/block-team-member-block",
+    "data": [],
+    "align": "",
+    "mode": "preview"
     } /-->
 
     <!-- wp:group {"backgroundColor":"neutral-200"} -->

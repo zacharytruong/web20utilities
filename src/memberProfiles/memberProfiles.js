@@ -4,13 +4,13 @@ const memberProfiles = ( function () {
     constructor(name, mlsArea, mlsID) {
         this.title = `<item>
         <title><![CDATA[${name}]]></title>
-            
+        <description></description>
         <content:encoded>
           <![CDATA[`;
         this.mainBlock = `<!-- wp:acf/block-callout-block {
-          "name": "acf\/block-callout-block",
+          "name": "acf\\/block-callout-block",
           "data": {
-              "header": "${name}]",
+              "header": "${name}",
               "_header": "field_5e0f4a7e86613",
               "sub": "Please replace with partner's sub header",
               "_sub": "field_5e0f4bdbad92a",
@@ -47,14 +47,15 @@ const memberProfiles = ( function () {
           "mode": "edit"
         } /-->`;
         this.memberBlock = `<!-- wp:acf/block-team-member-block {
+          "id": "block_620ed4cc205b9",
           "name": "acf\/block-team-member-block",
           "data": [],
           "align": "",
-          "mode": "edit"
+          "mode": "preview"
         } /-->`;
         this.statBlockGroup = `<!-- wp:group {"backgroundColor":"neutral-200"} -->
         <div class="wp-block-group has-neutral-200-background-color has-background"><!-- wp:acf/block-stat-block {
-          "name": "acf\/block-stat-block",
+          "name": "acf\\/block-stat-block",
           "data": {
               "has_title": "1",
               "_has_title": "field_5e18937f3e93a",
@@ -79,9 +80,10 @@ const memberProfiles = ( function () {
             },
           "align": "",
           "mode": "edit"
-        } /-->`;
+        } /--></div>
+        <!-- /wp:group -->`;
         this.sectionHeader = `<!-- wp:acf/block-section-head {
-          "name": "acf\/block-section-head",
+          "name": "acf\\/block-section-head",
           "data": {
               "section_title": "My Listings",
               "_section_title": "field_5dec10001f528",
@@ -96,16 +98,16 @@ const memberProfiles = ( function () {
           "mode": "edit"
         } /-->`;
         this.hjBlock = ` <!-- wp:acf/block-home-junction-block {
-          "name": "acf\/block-home-junction-block",
+          "name": "acf\\/block-home-junction-block",
           "data": {
-              "shortcode": "[listings market=\"${mlsArea}\" agentId=\"${mlsID}\" listingType=\"residential,multifamily\\" sortfield=\"daysOnHJI\" sortorder=\"asc\" pageSize=\"8\" grid_size=\"4\" map=\"0\" pagination=\"0\"]",
+              "shortcode": "[listings market=\\"${mlsArea}\\" agentId=\\"${mlsID}\\" listingType=\\"residential,multifamily\\" sortfield=\\"daysOnHJI\\" sortorder=\\"asc\\" pageSize=\\"8\\" grid_size=\\"4\\" map=\\"0\\" pagination=\\"0\\"]",
               "_shortcode": "field_5ebe3e373e5d6"
             },
           "align": "",
           "mode": "edit"
         } /-->`;
         this.pastSalesSection = `    <!-- wp:acf/block-section-head {
-          "name": "acf\/block-section-head",
+          "name": "acf\\/block-section-head",
           "data": {
               "section_title": "Past Sales",
               "_section_title": "field_5dec10001f528",
@@ -120,9 +122,9 @@ const memberProfiles = ( function () {
           "mode": "edit"
         } /-->`;
         this.hjPastSales = `<!-- wp:acf/block-home-junction-block {
-          "name": "acf\/block-home-junction-block",
+          "name": "acf\\/block-home-junction-block",
           "data": {
-              "shortcode": "<div data-pm-slice=\"1 1 []\" data-en-clipboard=\"true\">[past_sales market=\"${mlsArea}\" agentId=\"${mlsID}\" sortfield=\"offMarketDate\" sortorder=\"desc\" status=\"Sold\" pageSize=\"8\" grid_size=\"3\" map=\"0\" pagination=\"1\"]<\/div>",
+              "shortcode": "<div data-pm-slice=\\"1 1 []\\" data-en-clipboard=\\"true\\">[past_sales market=\\"${mlsArea}\\" agentId=\\"${mlsID}\\" sortfield=\\"offMarketDate\\" sortorder=\\"desc\\" status=\\"Sold\\" pageSize=\\"8\\" grid_size=\\"3\\" map=\\"0\\" pagination=\\"1\\"]<\\/div>",
               "_shortcode": "field_5ebe3e373e5d6"
             },
           "align": "",
@@ -134,7 +136,7 @@ const memberProfiles = ( function () {
         <!-- /wp:spacer -->
     
         <!-- wp:acf/block-cards {
-          "name": "acf\/block-cards",
+          "name": "acf\\/block-cards",
           "data": {
               "title": "Explore Our Neighborhoods",
               "_title": "field_6030498934b30",
@@ -142,7 +144,7 @@ const memberProfiles = ( function () {
               "_card_0_image": "field_60304a3034b32",
               "card_0_image_size": "fill",
               "_card_0_image_size": "field_6035a3e032cc5",
-              "card_0_link_to": "\/community-details\/almaden-valley\/",
+              "card_0_link_to": "\\/community-details\\/almaden-valley\\/",
               "_card_0_link_to": "field_60304a5834b33",
               "card_0_title": "Almaden Valley",
               "_card_0_title": "field_60304a7334b34",
@@ -150,7 +152,7 @@ const memberProfiles = ( function () {
               "_card_1_image": "field_60304a3034b32",
               "card_1_image_size": "fill",
               "_card_1_image_size": "field_6035a3e032cc5",
-              "card_1_link_to": "\/community-details\/cambrian-park\/",
+              "card_1_link_to": "\\/community-details\\/cambrian-park\\/",
               "_card_1_link_to": "field_60304a5834b33",
               "card_1_title": "Cambrian Park",
               "_card_1_title": "field_60304a7334b34",
@@ -158,7 +160,7 @@ const memberProfiles = ( function () {
               "_card_2_image": "field_60304a3034b32",
               "card_2_image_size": "fill",
               "_card_2_image_size": "field_6035a3e032cc5",
-              "card_2_link_to": "\/community-details\/downtown-san-jose\/",
+              "card_2_link_to": "\\/community-details\\/downtown-san-jose\\/",
               "_card_2_link_to": "field_60304a5834b33",
               "card_2_title": "San Jose",
               "_card_2_title": "field_60304a7334b34",
@@ -166,7 +168,7 @@ const memberProfiles = ( function () {
               "_card_3_image": "field_60304a3034b32",
               "card_3_image_size": "fill",
               "_card_3_image_size": "field_6035a3e032cc5",
-              "card_3_link_to": "\/community-details\/willow-glen\/",
+              "card_3_link_to": "\\/community-details\\/willow-glen\\/",
               "_card_3_link_to": "field_60304a5834b33",
               "card_3_title": "Willow Glen",
               "_card_3_title": "field_60304a7334b34",
@@ -174,7 +176,7 @@ const memberProfiles = ( function () {
               "_card_4_image": "field_60304a3034b32",
               "card_4_image_size": "fill",
               "_card_4_image_size": "field_6035a3e032cc5",
-              "card_4_link_to": "\/community-details\/los-gatos\/",
+              "card_4_link_to": "\\/community-details\\/los-gatos\\/",
               "_card_4_link_to": "field_60304a5834b33",
               "card_4_title": "Los Gatos",
               "_card_4_title": "field_60304a7334b34",
@@ -182,7 +184,7 @@ const memberProfiles = ( function () {
               "_card_5_image": "field_60304a3034b32",
               "card_5_image_size": "fill",
               "_card_5_image_size": "field_6035a3e032cc5",
-              "card_5_link_to": "\/community-details\/saratoga\/",
+              "card_5_link_to": "\\/community-details\\/saratoga\\/",
               "_card_5_link_to": "field_60304a5834b33",
               "card_5_title": "Saratoga",
               "_card_5_title": "field_60304a7334b34",
@@ -190,7 +192,7 @@ const memberProfiles = ( function () {
               "_card_6_image": "field_60304a3034b32",
               "card_6_image_size": "fill",
               "_card_6_image_size": "field_6035a3e032cc5",
-              "card_6_link_to": "\/community-details\/santa-cruz\/",
+              "card_6_link_to": "\\/community-details\\/santa-cruz\\/",
               "_card_6_link_to": "field_60304a5834b33",
               "card_6_title": "Santa Cruz",
               "_card_6_title": "field_60304a7334b34",
@@ -198,7 +200,7 @@ const memberProfiles = ( function () {
               "_card_7_image": "field_60304a3034b32",
               "card_7_image_size": "fill",
               "_card_7_image_size": "field_6035a3e032cc5",
-              "card_7_link_to": "\/community-details\/carmel\/",
+              "card_7_link_to": "\\/community-details\\/carmel\\/",
               "_card_7_link_to": "field_60304a5834b33",
               "card_7_title": "Carmel",
               "_card_7_title": "field_60304a7334b34",
@@ -224,7 +226,7 @@ const memberProfiles = ( function () {
         <!-- /wp:spacer --></div>
         <!-- /wp:group -->`;
         this.homeValuation = `<!-- wp:acf/block-callout-block {
-          "name": "acf\/block-callout-block",
+          "name": "acf\\/block-callout-block",
           "data": {
               "header": "Discover Your Home's Value",
               "_header": "field_5e0f4a7e86613",
@@ -244,7 +246,7 @@ const memberProfiles = ( function () {
               "_has_modal": "field_5e0f4cadad92f",
               "button": {
                   "title": "Get Home Value",
-                  "url": "\/home-valuation",
+                  "url": "\\/home-valuation",
                   "target": ""
               },
               "_button": "field_5e0f4cbcad930",
@@ -255,7 +257,7 @@ const memberProfiles = ( function () {
           "mode": "edit"
         } /-->`;
         this.featureListings =`<!-- wp:acf/block-featured-listings-cards {
-          "name": "acf\/block-featured-listings-cards",
+          "name": "acf\\/block-featured-listings-cards",
           "data": {
               "section_title": "Featured Listings",
               "_section_title": "field_5dec10001f528",
@@ -272,7 +274,7 @@ const memberProfiles = ( function () {
           "mode": "edit"
         } /-->`;
         this.letsTalk = `<!-- wp:acf/block-callout-block {
-          "name": "acf\/block-callout-block",
+          "name": "acf\\/block-callout-block",
           "data": {
               "header": "Let's Talk",
               "_header": "field_5e0f4a7e86613",

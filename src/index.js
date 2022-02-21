@@ -21,7 +21,6 @@ import xmlEnd from './xmlEnd.xml';
   const uploadBtn = document.createElement('input');
   uploadBtn.id = 'upload';
   uploadBtn.type = 'file';
-  uploadBtn.accept = '.csv';
   uploadBtn.style.display = 'none';
   uploadBtn.addEventListener('change', handleUploadFile);
   uploadForm.appendChild(uploadBtn);
@@ -67,19 +66,27 @@ import xmlEnd from './xmlEnd.xml';
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     const fileType = file.type;
-    fileType === 'text/csv' ? dropNotice.textContent = file.name : dropNotice.textContent = 'Unsupported file, please add csv file only.'
+    // fileType === 'text' ? dropNotice.textContent = file.name : dropNotice.textContent = 'Unsupported file, please add csv file only.'
+    dropNotice.textContent = file.name
+    // Trigger change event
     reader.readAsText(file);
   });
   
   function handleUploadFile(e) {
     let file = e.target.files[0];
+    // Trigger change event
     reader.readAsText(file);
   }
   function handleFileRead(e) {
     const save = e.target.result;
+    // Convert uploaded file to readable objects
     const uploadedData = strToArr(save);
     localStorage.setItem('uploadedData', JSON.stringify(uploadedData));
+    // Clear local storage after 120s for security purposes
+    setTimeout(( () => localStorage.removeItem('uploadedData')), 120000)
   }
+
+  // Function to convert csv file to readable objects
   function strToArr(str, delimiter = ',') {
     str = str.replace(/"/g, '');
     const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
