@@ -1,30 +1,21 @@
 import './style.css';
 import FileSaver, { saveAs } from 'file-saver';
-import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
+import {memberProfiles} from './memberProfiles/memberProfiles.js';
+import xmlStart from './xmlStart.xml';
+import xmlEnd from './xmlEnd.xml';
 
-( function init() {
-
-  function _init() {
-    mPXMLImport();
-  }
-
-})();
-
-(function basicLayout() {
-  
-  const mainContent = document.getElementById('mainContent');
-  mainContent.style.display = 'flex';
-  mainContent.style['flex-direction'] = 'column';
-  mainContent.style['align-items'] = 'center';
-  mainContent.style['justify-content'] = 'center';
-  mainContent.style.minWidth = '100vw';
-  mainContent.style.minHeight = '100vh';
-
+( function localStorage() {
+  const localStorage = window.localStorage;
+  const AgentsArr = [];
+  localStorage.setItem('AgentsArr', JSON.stringify(AgentsArr));
 })();
 
 (function uploadForm() {
 
   const uploadForm = document.createElement('form');
+  uploadForm.style.display = 'flex';
+  uploadForm.style.height = '5rem';
+  uploadForm.style.width = '100%';
   mainContent.appendChild(uploadForm);
   
   const uploadBtn = document.createElement('input');
@@ -37,10 +28,10 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   const uploadBtnLabel = document.createElement('label');
   uploadBtnLabel.setAttribute('for', 'upload');
   uploadBtnLabel.textContent = 'Browse';
+  uploadBtnLabel.style.alignSelf = 'flex-start';
   uploadBtnLabel.style.padding = '1.5rem 3rem';
   uploadBtnLabel.style.background = '#3f4241';
   uploadBtnLabel.style['border-radius'] = '.7rem';
-  uploadBtnLabel.style.margin = '1rem';
   uploadBtnLabel.style.color = '#FFFFFF';
   uploadForm.appendChild(uploadBtnLabel);
   mainContent.appendChild(uploadForm);
@@ -50,8 +41,7 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   dropArea.style.width = '30rem';
   dropArea.style.height = '30rem';
   dropArea.style.background = 'rgba(63, 66, 65, .5)';
-  dropArea.style.borderRadius = '2rem';
-  dropArea.style.margin = '1rem';
+  dropArea.style.borderRadius = '1rem';
   const dropNotice = document.createElement('p');
   dropNotice.textContent = 'Drop Your File Here';
   dropNotice.style.fontSize = '2rem';
@@ -61,6 +51,7 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   dropArea.appendChild(dropNotice);
   mainContent.appendChild(dropArea);
   
+  // Reading uploaded file
   let reader = new FileReader();
   reader.addEventListener('load', handleFileRead);
 
@@ -81,20 +72,16 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   });
   
   function handleUploadFile(e) {
-    console.log('uploading');
     let file = e.target.files[0];
     reader.readAsText(file);
   }
   function handleFileRead(e) {
     const save = e.target.result;
-    const arr = strToArr(save);
-    const localStorage = window.localStorage;
-    localStorage.setItem('uploadedFile', JSON.stringify(arr));
-    // const agent = JSON.parse(localStorage.getItem('uploadedFile'))[0];
-    // console.log(agent['"Email"'].slice(1, agent['"Email"'].length - 1));
-    localStorage.clear()
+    const uploadedData = strToArr(save);
+    localStorage.setItem('uploadedData', JSON.stringify(uploadedData));
   }
   function strToArr(str, delimiter = ',') {
+    str = str.replace(/"/g, '');
     const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
     const rows = str.slice(str.indexOf("\n") + 1).split("\n");
     const arr = rows.map(function (row) {
@@ -107,10 +94,11 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
     });
     return arr;
   }
+
 })();
 
 (function downloadBtn() {
-
+  
   const downloadBtn = document.createElement('button');
   downloadBtn.textContent = 'Download';
   downloadBtn.style.padding = `1.5rem 3rem`;
@@ -120,8 +108,40 @@ import {memberProfilesXML} from './memberProfiles/memberProfilesXML.js';
   downloadBtn.style.color = '#FFFFFF';
   downloadBtn.style['border-radius'] = '.7rem';
   mainContent.appendChild(downloadBtn);
+  
+  downloadBtn.onclick = (() => {
+    if (localStorage.getItem('uploadedData')) {
+      // Generate Data
+      const uploadedData = JSON.parse(localStorage.getItem('uploadedData'));
+      const AgentsArr = JSON.parse(localStorage.getItem('AgentsArr'));
+      memberProfiles.createAgents(uploadedData, AgentsArr);
+      const data = memberProfiles.createAgentsArrayData(AgentsArr);
 
-  const blob = new Blob([], {type: "text/plain;charset=utf-8"});
-  downloadBtn.onclick = (() => FileSaver.saveAs(blob, "memberProfilesXML.xml"));
+      // Download functionality
+      const blobData = createBlobData([], xmlStart ,data, xmlEnd);
+      const blob = new Blob(blobData, {type: "text/plain;charset=utf-8"});
+      FileSaver.saveAs(blob, "memberProfiles.xml");
+      localStorage.removeItem('uploadedData');
+     } else return;
+  });
+    function createBlobData(arr, ...args) {
+      for (let arg of args) {
+        arr.push(arg);
+      }
+      return arr;
+    }
+})();
 
+( function clearStorage() {
+  const btn = document.createElement('button');
+  btn.textContent = 'CLEAR';
+  btn.style.padding = '1rem 3rem';
+  btn.onclick = clearStorage;
+
+
+  mainContent.appendChild(btn);
+  function clearStorage() {
+    window.localStorage.clear();
+    location.reload();
+  }
 })();

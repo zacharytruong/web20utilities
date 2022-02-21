@@ -1,14 +1,14 @@
 <item>
-<title><![CDATA[Ian Batra]]></title>
+<title><![CDATA[${agent['Preferred Name]}]]></title>
     
 <content:encoded>
   <![CDATA[
     <!-- wp:acf/block-callout-block {
       "name": "acf\/block-callout-block",
       "data": {
-          "header": "Ian Batra",
+          "header": "${agent['Preferred Name]}",
           "_header": "field_5e0f4a7e86613",
-          "sub": "Serving Almaden Valley, Cambrian Park, San Jose, Willow Glen, Los Gatos, Saratoga, Santa Cruz, Carmel & more",
+          "sub": "Please replace with partner's",
           "_sub": "field_5e0f4bdbad92a",
           "text_align": "center",
           "_text_align": "field_5e8f74b3303f0",
