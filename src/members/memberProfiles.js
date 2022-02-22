@@ -1,4 +1,4 @@
-const memberProfiles = ( function () {
+const memberProfiles = ( function() {
   
   class Agent {
     constructor(name, mlsArea, mlsID) {
@@ -315,9 +315,23 @@ const memberProfiles = ( function () {
 
         <wp:post_type><![CDATA[member-profile]]></wp:post_type>
         </item>`;
+        // this.order = [this.mainBlock, 
+        //   this.memberBlock, 
+        //   this.statBlockGroup, 
+        //   this.sectionHeader, 
+        //   this.hjBlock,
+        //   this.pastSalesSection,
+        //   this.hjPastSales,
+        //   this.neighborhoodsCardsGroup,
+        //   this.homeValuation,
+        //   this.featureListings,
+        //   this.letsTalk,
+        // ];
+    }
+    changeBlockContent(key, content) {
+      return this[key] = content;
     }
   }
-  
   function createAgents(arr1, arr2) {
     arr1.forEach( (arrItem) => {
       const agent = new Agent(arrItem['Preferred Name'], arrItem['MLS Area'], arrItem['MLS ID']);
@@ -325,7 +339,7 @@ const memberProfiles = ( function () {
     });
     return arr2;
   }
-  function createAgentData(obj) {
+  function _createAgentData(obj) {
     let agentData = '';
     for (let prop in obj) {
       agentData += obj[prop];
@@ -335,13 +349,12 @@ const memberProfiles = ( function () {
   function createAgentsArrayData(arr) {
     let data = '';
     for (let arrItem of arr) {
-      data += createAgentData(arrItem);
+      data += _createAgentData(arrItem);
     }
     return data;
   }
   return {
     createAgents,
-    createAgentData,
     createAgentsArrayData,
   }
 
