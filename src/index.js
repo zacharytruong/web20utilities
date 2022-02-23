@@ -1,4 +1,3 @@
-import './style.css';
 import FileSaver, { saveAs } from 'file-saver';
 import { memberPage } from './members/membersPage.js';
 import xmlStart from './xmlStart.xml';

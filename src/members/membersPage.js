@@ -3,31 +3,133 @@ import xmlStart from './../xmlStart.xml';
 import xmlEnd from './../xmlEnd.xml';
 import { memberProfiles } from './memberProfiles.js';
 
+const domObject = ( function() {
+  const html = document.documentElement;
+  html.style.fontSize = '10px';
+  const mainContent = document.getElementById('mainContent');
+  class Style {
+    // constructor(display, margin, padding, height, width, fontSize) {
+    //   this.display = display || 'block';
+    //   this.margin = margin || 0;
+    //   this.padding = padding || 0;
+    //   this.height = height || '';
+    //   this.width = width || '';
+    //   this.fontSize = fontSize || '10px';
+    // }
+    setDisplay(display) {
+      this.display = display;
+    }
+    setMargin(margin) {
+      this.margin = margin;
+    }
+    setPadding(padding) {
+      this.padding = padding;
+    }
+    setHeight(height) {
+      this.height = height;
+    }
+    setWidth(width) {
+      this.width = width;
+    }
+    setFontSize(fontSize) {
+      this.fontSize = fontSize;
+    }
+    setBorderRadius(radius) {
+      this.borderRadius = radius;
+    }
+  }
+  class Attr {
+    constructor() {}
+    setAttribute(name, data) {
+      this[name] = data;
+    }
+  }
+  class domObject {
+    constructor(objID, objClass) {
+      this.id = objID || '';
+      this.class = objClass || '';
+      this.style = new Style();
+      this.attr = new Attr();
+    }
+    addToDOM(node) {
+      const el = document.createElement(this.type);
+      for (let key in this) {
+        if (key === 'id') {
+          el.id = this['id'];
+        } else if (key === 'class') {
+          el.classList.add(this['class']);
+        } else if (key === 'style') {
+            for (let cssStyle in this[key]) {
+              el.style[cssStyle] = this[key][cssStyle];
+            }
+        } else if (key === 'attr') {
+          for (let cssAttr in this[key]) {
+            el.setAttribute(cssAttr, this[key][cssAttr]);
+          }
+        }
+      }
+      return node.appendChild(el);
+    }
+    addTextContent(content) {
+      
+    }
+  }
+  class domDiv extends domObject{
+    constructor(objID, objClass) {
+      super(objID, objClass);
+      this.type = 'div';
+    }
+  }
+  class domH2 extends domObject{
+    constructor(objID, objClass) {
+      super(objID, objClass);
+      this.type = 'h2';
+    }
+  }
+  class domH3 extends domObject{
+    constructor(objID, objClass) {
+      super(objID, objClass);
+      this.type = 'h3';
+    }
+  }
+  class domPara extends domObject{
+    constructor(objID, objClass) {
+      super(objID, objClass);
+      this.type = 'p';
+    }
+  }
+  class domButton extends domObject{
+    constructor(objID, objClass) {
+      super(objID, objClass);
+      this.type = 'button';
+      this.style.borderRadius = '.7rem';
+    }
+  }
+  const header = new domDiv('header', 'header');
+  header.addToDOM(mainContent);
+
+  const btn = new domButton('demoBtn', 'demoBtn');
+  btn.addTextContent = 'DEMO';
+  btn.style.setPadding('1rem 3rem');
+  btn.addToDOM(mainContent);
+  console.log(btn);
+  return {
+    
+  }
+})();
+
 const memberPage = ( function() {
 
   const uploadForm = (function() {
 
     const uploadForm = document.createElement('form');
-    // uploadForm.style.display = 'flex';
-    // uploadForm.style.height = '5rem';
-    // uploadForm.style.width = '100%';
     mainContent.appendChild(uploadForm);
     
     const uploadBtn = document.createElement('input');
     uploadBtn.id = 'upload';
     uploadBtn.type = 'file';
-    // uploadBtn.style.display = 'none';
     uploadBtn.addEventListener('change', handleUploadFile);
     uploadForm.appendChild(uploadBtn);
-    // const uploadBtnLabel = document.createElement('label');
-    // uploadBtnLabel.setAttribute('for', 'upload');
-    // uploadBtnLabel.textContent = 'Browse';
-    // uploadBtnLabel.style.alignSelf = 'flex-start';
-    // uploadBtnLabel.style.padding = '1.5rem 3rem';
-    // uploadBtnLabel.style.background = '#3f4241';
-    // uploadBtnLabel.style['border-radius'] = '.7rem';
-    // uploadBtnLabel.style.color = '#FFFFFF';
-    // uploadForm.appendChild(uploadBtnLabel);
     mainContent.appendChild(uploadForm);
   
     // const dropArea = document.createElement('div');
@@ -137,8 +239,5 @@ const memberPage = ( function() {
     render,
   }
 })();
-
-
-
 
 export {memberPage};
