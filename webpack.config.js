@@ -5,6 +5,7 @@ module.exports = {
   entry: {
     index: './src/index.js',
   },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
@@ -20,6 +21,5 @@ module.exports = {
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, 'dist'),
-    clean: true,
   },
 };
