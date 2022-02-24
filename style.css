@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-  --primary-color: #C21500;
+  --primary-color: #3f4241;
   --primary-white-color: #FFF;
   --primary-text-color: #333333;
   --secondary-text-color: #757575;
@@ -14,4 +14,84 @@
 html {
   font-size: 10px;
   line-height: 1.6;
+}
+button {
+  padding: 1rem 3rem;
+  border-radius: .7rem;
+}
+.button {
+  padding: 1rem 3rem;
+  border-radius: .7rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  background-color: var(--primary-color);
+  min-height: 30vh;
+}
+.header .title {
+  color: var(--primary-white-color);
+  font-size: 3rem;
+  padding: 3rem;
+}
+.navList {
+  padding: 1rem 0 3rem 0;
+}
+.navList .navItem{
+  color: var(--primary-white-color);
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+}
+.navList .navItem:hover {
+  cursor: pointer;
+  border-bottom: .1rem solid var(--primary-white-color);
+}
+
+/* Main section */
+#main {
+  padding: 5rem 0;
+  min-height: 60vh;
+}
+.mpContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+.column {
+  text-align: center;
+}
+.third {
+  width: calc((100% / 3));
+}
+.column > h3 {
+  font-size: 2rem;
+  color: var(--secondary-text-color);
+  padding: 2rem;
+}
+#uploadForm {
+  /* text-align: center; */
+  padding: 5rem 3rem;
+}
+#upload {
+  display: none;
+}
+.uploadLabel {
+  color: var(--primary-white-color);
+  font-size: 2rem;
+  cursor: pointer;
+  background: var(--secondary-text-color);
+}
+.uploadNotification {
+  padding: 1rem 2rem;
+}
+/* Footer */
+#footer {
+  background-color: var(--primary-color);
+  padding: 2rem 0;
+  min-height: 10vh;
+}
+.copyright {
+  color: var(--primary-white-color);
+  text-align: center;
 }
