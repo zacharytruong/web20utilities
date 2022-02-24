@@ -9,8 +9,6 @@ import {webpage} from './webpage.js';
 
   function _init() {
     webpage;
-    // membersPage.render();
-    // footer;
   }
 })();
 
