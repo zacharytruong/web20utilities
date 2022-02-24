@@ -1,12 +1,12 @@
 {
-  "name": "web20utilities",
+  "name": "websiteautomation",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --progress --mode=production",
-    "watch": "webpack --progress --watch"
+    "build": "webpack --mode=development",
+    "watch": "webpack --watch"
   },
   "author": "zacharytruong",
   "license": "ISC",
