@@ -1,5 +1,5 @@
-const footer = ( function() {
+// const footer = ( function() {
   
-})();
+// })();
 
-export {footer};
+// export {footer};
